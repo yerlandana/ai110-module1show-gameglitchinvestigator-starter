@@ -31,7 +31,22 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+- ## Demo
+
+This project implements the backend logic for the ByteBites system.
+
+The system allows:
+- managing customers
+- browsing food items
+- filtering menu items by category
+- creating transactions and calculating order totals
+
+Example output:
+
+Drinks: ['Large Soda']
+Total: 15
+![pytest results](Screenshot 2026-03-16 at 02.25.27.png)
+
 
 ## 🚀 Stretch Features
 
