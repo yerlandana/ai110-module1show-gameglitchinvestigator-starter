@@ -7,7 +7,7 @@ def get_range_for_difficulty(difficulty: str):
     if difficulty == "Normal":
         return 1, 100
     if difficulty == "Hard":
-        return 1, 50
+        return 1, 500  # FIX: Range was 1-50 (easier than Normal). AI (Claude Code) identified the range should be larger to increase difficulty. Verified by checking sidebar caption after selecting Hard.
     return 1, 100
 
 
@@ -35,16 +35,16 @@ def check_guess(guess, secret):
 
     try:
         if guess > secret:
-            return "Too High", "📈 Go HIGHER!"
+            return "Too High", "📉 Go LOWER!"  # FIX: Message was "Go HIGHER!" — AI (Claude Code) spotted the swap and corrected both branches. Verified by guessing a number higher than the secret and confirming hint says LOWER.
         else:
-            return "Too Low", "📉 Go LOWER!"
+            return "Too Low", "📈 Go HIGHER!"  # FIX: Message was "Go LOWER!" — same swap. Verified by guessing lower than the secret and confirming hint says HIGHER.
     except TypeError:
         g = str(guess)
         if g == secret:
             return "Win", "🎉 Correct!"
         if g > secret:
-            return "Too High", "📈 Go HIGHER!"
-        return "Too Low", "📉 Go LOWER!"
+            return "Too High", "📉 Go LOWER!"  # FIX: Mirror of above fix applied to string-comparison fallback branch.
+        return "Too Low", "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
@@ -133,7 +133,7 @@ with col3:
 
 if new_game:
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.secret = random.randint(low, high)  # FIX: Was hardcoded to randint(1, 100), ignoring difficulty. AI (Claude Code) flagged it; changed to use low/high from get_range_for_difficulty(). Verified by starting a new Hard game and checking the Developer Debug Info secret value exceeded 100.
     st.success("New game started.")
     st.rerun()
 
